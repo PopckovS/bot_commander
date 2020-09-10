@@ -1,4 +1,4 @@
-from app import db
+from models.DB import db
 from datetime import datetime
 
 class Telegram_Messages(db.Model):

@@ -28,12 +28,13 @@ GIPHY_API_KEY = ""
 GIPHY_APPLICATION_NAME = "SuperAgression"
 
 # Порт на котором мы будем запускать наш сервер Flask
-SERVER_PORT = 7001
+SERVER_PORT = 9001
 
 # Статичное Имя Домена, для WebHook от FaceBook
 SERVER_URL = "https://sergio-fb-bot.serverless.social"
 
 # Команда для CLI терминала, чтобы расшарить локальный хост сервера, для доступа FaceBook Api Key
+# lt -h http://serverless.social --subdomain sergio-fb-bot -p 9001
 SERVER_START_COMMAND_FOR_CLI = "lt -h http://serverless.social --subdomain sergio-fb-bot -p " + str(SERVER_PORT)
 
 # ID страницы бота в FaceBook
@@ -47,13 +48,13 @@ BOT_NAME = "MitBotTest"
 DB_SUBD = "mysql+pymysql"
 
 # Имя пользователя для БД
-DB_USERNAME = ""
+DB_USERNAME = "serg"
 
 # Пароль для входа в БД
 DB_PASSWORD = "11"
 
 # База данный с которой будем работать
-DB_NAME = "facebook"
+DB_NAME = "bot_commander"
 
 # Хост подключения к БД
 DB_HOST = "localhost"

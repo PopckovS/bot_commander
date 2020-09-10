@@ -1,26 +1,26 @@
 #! /usr/bin/python3
-# Указываем Shebang на случай если будем запускать приложениене не из виртуального окружения
-
-import requests
-import json
-
-import facebook_config
-from facebook_config import trace
 
 from flask import Flask, url_for, request, render_template, \
     redirect, abort, flash, make_response
 from flask_sqlalchemy import SQLAlchemy
 
-# import start
+import requests
+import json
+import sys
+import os
 
 
-# start.server_start()
+# Добавляем путь к родительской директории
+two_up = os.path.abspath(os.path.join(__file__, "../.."))
+sys.path.append(two_up)
+
+import Facebook.config as config
+from Facebook.config import trace
+
 
 app = Flask(__name__)
-# app = Flask('fb')
 app.secret_key = 'some_secret'
-
-app.config['SQLALCHEMY_DATABASE_URI'] = facebook_config.CONNECT_DB
+app.config['SQLALCHEMY_DATABASE_URI'] = config.CONNECT_DB
 
 # Создаем подключение к БД
 # db = SQLAlchemy(app)
@@ -36,7 +36,7 @@ def verify_for_facebook_webhook():
     Но Flask запущен на локалке а не в сети, так что его нкельзя установить ка WebHook, тут то
     в игру и вступает утилита ngrok/localtunnel которая расшарит локальный сайт, идаст ему доступ в Сеть."""
 
-    if request.args.get('hub.verify_token', '') == facebook_config.FACEBOOK_API_KEY:
+    if request.args.get('hub.verify_token', '') == config.FACEBOOK_API_KEY:
         print("Verified")
         return request.args.get('hub.challenge', '')
     else:
@@ -72,7 +72,7 @@ def send_text_message(recipient_id, message):
     })
 
     params = {
-        "access_token": facebook_config.FACEBOOK_API_KEY
+        "access_token": config.FACEBOOK_API_KEY
     }
 
     headers = {
@@ -103,7 +103,7 @@ def send_gif_message(recipient_id, message):
     })
 
     params = {
-                 "access_token": facebook_config.FACEBOOK_API_KEY
+                 "access_token": config.FACEBOOK_API_KEY
     }
 
     headers = {
@@ -117,10 +117,9 @@ def send_gif_message(recipient_id, message):
 
 
 def search_gif(text):
-    """Метод делает GET запрос к сервису GIPHY
-    и получает gif на заданную тему."""
+    """Метод делает GET запрос к сервису GIPHY и получает gif на заданную тему."""
 
-    payload = {'s': text, 'api_key': facebook_config.GIPHY_API_KEY}
+    payload = {'s': text, 'api_key': config.GIPHY_API_KEY}
     response = requests.get('http://api.giphy.com/v1/gifs/translate', params=payload)
     response_json = response.json()
     gif_url = response_json['data']['images']['original']['url']
@@ -131,13 +130,5 @@ def search_gif(text):
     return gif_url
 
 
-# if __name__ == '__main__':
-#     """Запускаем работу сервера Flask"""
-#     app.run(debug=True, port=config.SERVER_PORT)
-
-def facebook_start():
-    """Запускаем работу сервера Flask"""
-    app.run(debug=True, port=facebook_config.SERVER_PORT)
-
-
-facebook_start()
+if __name__ == "__main__":
+    app.run(debug=True, port=config.SERVER_PORT)

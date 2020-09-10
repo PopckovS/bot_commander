@@ -25,8 +25,14 @@
     pip3 install pytelegrambotapi
     import telebot
 
+Посмотреть Доступные пути, для импортирования модулей
+    import sys
+    print('\n\nПеременная PYTHONPATH содержит', sys.path, '\n')
+
 # Красивое форматирование Даты времени
 # dt = datetime.fromtimestamp(message['time'])
 # dt_beauty = dt.strftime('%Y:%m:%d %H:%M:%S')
 
 """
+
+

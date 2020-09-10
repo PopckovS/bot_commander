@@ -1,13 +1,7 @@
-
-
-# Ссылка на БРИФ в гугул страницах
-GOOGLE_FORM_BRIF = 'https://docs.google.com/forms/d/e/1FAIpQLSdAhEeEfNyv4fnTHRt_EmxfbZ3JQtU1uH5lQr7bvgIXfP_ZVA/viewform'
+LOCAL_TUNEL_FACEBOOK = 'lt -h http://serverless.social --subdomain sergio-fb-bot -p 9001'
 
 # Хост для запуска сайта
 WEBSITE_HOST = 'localhost'
-
-# Порт для запуска сайта
-WEBSITE_PORT = '9000'
 
 # База Данных которую мы используем для работы
 DB = 'bot_commander'

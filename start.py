@@ -1,12 +1,7 @@
+#! /usr/bin/python3
 import multiprocessing
-import website
+import config
 import os
-
-# import threading
-# from threading import Thread
-
-from facebook_config import SERVER_START_COMMAND_FOR_CLI
-
 
 """Точка входа всего приложения, регистрация и запуск дочерних процессов.
 После запуска всех дочерних процессво, в главном процессе запускается сайт,
@@ -14,53 +9,46 @@ from facebook_config import SERVER_START_COMMAND_FOR_CLI
 
 
 def all_process_start():
-    """В главном процессе запускается сайт, в дочерних процессы для Telegram, FaceBook.
+    """В главном процессе запускается сайт, в дочерних процессах:
+     - Facebook PORT: 9001
+     - locTunel PORT: 9001
+     - Telegram PORT: 9002
+     - NLP bot  PORT: 9003
+    p1 = multiprocessing.Process(target=<Имя Регистрируемой функции>)
+    p1.start() - запуск работы процесса.
     p1.join() - эта команд ожидает завершение процесса."""
-    # telegram_process = multiprocessing.Process(target=telegram_process_register)
-    # Thread
 
     telegram_process = multiprocessing.Process(target=telegram_process_register)
     facebook_process = multiprocessing.Process(target=facebook_process_register)
     facebook_process_host = multiprocessing.Process(target=facebook_process_host_register)
-    # nlp_process = multiprocessing.Process(target=nlp_process_register)
 
     telegram_process.start()
     facebook_process.start()
     facebook_process_host.start()
-    # nlp_process.start()
 
-    # print('================' * 10)
-    # print("Запущено потоков: %i." % threading.active_count())
-    # print('================' * 10)
 
 def telegram_process_register():
     """Метод регистрирует процесс для запуска Telegram бота """
-    import Telegram.bot
+    os.system('python3 Telegram/bot.py ')
 
 
 def facebook_process_register():
     """Метод регистрирует процесс для запуска FaceBook бота """
-    import Facebook.app
+    os.system('python3 Facebook/bot.py ')
 
 
 def facebook_process_host_register():
     """Выполнение команды как, командв CLi на расшариваение локального хоста в Сеть."""
-    # print('================'*10)
-    # print(SERVER_START_COMMAND_FOR_CLI)
-    # print('================' * 10)
-    os.system(SERVER_START_COMMAND_FOR_CLI)
+    # os.system("lt -h http://serverless.social --subdomain sergio-fb-bot -p 9001")
+    os.system(config.LOCAL_TUNEL_FACEBOOK)
 
 
-# def nlp_process_register():
-#     """Метод регистрирует процесс для запуска Бота обработки текста """
-#     pass
-
-
-# def website_process_register():
-#     website.website_server_start()  # Запуск сайта в главном процессе
+def website_process_register():
+    """Запуск сайта"""
+    os.system('python3 Website/app.py ')
 
 
 all_process_start()  # Метод запускает дочерние процессы, для запуска ботов
-website.website_server_start()  # Запуск сайта в главном процессе
+website_process_register()  # Запуск сайта в главном процессе
 
-
+# import models
