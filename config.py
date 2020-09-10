@@ -1,4 +1,6 @@
-LOCAL_TUNEL_FACEBOOK = 'lt -h http://serverless.social --subdomain sergio-fb-bot -p 9001'
+LOCAL_TUNNEL_FACEBOOK = 'lt -h http://serverless.social --subdomain sergio-fb-bot -p'
+
+TUNNEL_PORT = 9001
 
 # Хост для запуска сайта
 WEBSITE_HOST = 'localhost'

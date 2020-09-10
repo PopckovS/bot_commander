@@ -29,23 +29,23 @@ def all_process_start():
 
 def telegram_process_register():
     """Метод регистрирует процесс для запуска Telegram бота """
-    os.system('python3 Telegram/bot.py ')
+    os.system('python3 Telegram/bot.py')
 
 
 def facebook_process_register():
     """Метод регистрирует процесс для запуска FaceBook бота """
-    os.system('python3 Facebook/bot.py ')
+    os.system('python3 Facebook/bot.py')
 
 
 def facebook_process_host_register():
     """Выполнение команды как, командв CLi на расшариваение локального хоста в Сеть."""
     # os.system("lt -h http://serverless.social --subdomain sergio-fb-bot -p 9001")
-    os.system(config.LOCAL_TUNEL_FACEBOOK)
+    os.system(config.LOCAL_TUNNEL_FACEBOOK + str(config.TUNNEL_PORT))
 
 
 def website_process_register():
     """Запуск сайта"""
-    os.system('python3 Website/app.py ')
+    os.system('python3 Website/app.py')
 
 
 all_process_start()  # Метод запускает дочерние процессы, для запуска ботов
