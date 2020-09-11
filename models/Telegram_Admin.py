@@ -1,14 +1,15 @@
-from flaskDB import db
+from models.DB import db
 # from flaskSQLalchemy import db
 from datetime import datetime
 
+
 class Telegram_Admin(db.Model):
-    '''Модель для работы с таблицей Admin
-    Хранит информацию о администраторах.'''
+    '''Модель для работы с таблицей Admin хранит информацию о администраторах.'''
 
     __tablename__ = 'Telegram_Admin'
 
     id = db.Column(db.Integer(), primary_key=True)
+
     name = db.Column(db.String(255), nullable=False)
     first_name = db.Column(db.String(255), nullable=False)
     last_name = db.Column(db.String(255), nullable=True)

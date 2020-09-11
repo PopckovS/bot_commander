@@ -21,7 +21,14 @@ from models.Telegram_Projects import Telegram_Projects
 
 # Создаем Сервре, и подключение к БД
 app = Flask(__name__)
+
+# Этот параметр создает подключение к БД
 app.config['SQLALCHEMY_DATABASE_URI'] = config.CONNECT_DB
+
+# Этот параметр отслеживает изменение Моделей прямо во время работы приложения
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Создаем подключение к БД
 db = SQLAlchemy(app)
 
 

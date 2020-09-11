@@ -1,4 +1,4 @@
-from flaskDB import db
+from models.DB import db
 # from flaskSQLalchemy import db
 from datetime import datetime
 
