@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    <!-- ФОРМА ОТПРАВКИ -->
+     <form name="sendmessage" id="sendmessage" action="/SendMessage/" method="POST">
+        <p>Написать сообщение</p>
+
+        <div class="form-group-inner">
+            <div class="row">
+                <div>
+                    <textarea name="message">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <button onclick="sendMessage()" type="button">
+            Отправить
+        </button>
+     </form>
+    <!-- КОНЕЦ ФОРМА ОТПРАВКИ -->
+
+    <!-- Выводим сообщение -->
+    <ul id="list">
+    </ul>
+
+
+    <style>
+        .user{
+            color: #0E993C;
+        }
+        .bot{
+            color: #9C1A1C;
+        }
+    </style>
+
+    <!-- Подключение JS Скриптов -->
+    <script src="{{ url_for('static', filename='js/vendor/jquery-1.12.4.min.js')}}"></script>
+    <script>
+         /** Регистрируем AJAX метод при отправки формы */
+        $(document).ready(function() {
+
+        });
+
+        /** Отправка сообщения клиенту */
+        function sendMessage(){
+
+            var form = document.forms["sendmessage"];
+
+            console.info(form)
+            console.info(form.message.value);
+
+            /** Добавляем сообщение пользователя к списку */
+            var text = form.message.value
+            var ul = document.getElementById("list");
+            var li_user = document.createElement("li");
+
+            li_user.appendChild(document.createTextNode(text));
+            li_user.setAttribute("class", "user");
+            ul.appendChild(li_user);
+
+
+            var url = '/SendMessage/'
+             $.ajax({
+                type: "POST",
+                url: url,
+                dataType: 'json',
+                data: $(form).serialize(),
+                success: function (data) {
+                    console.log(data);
+                    if(data['result'] == 'ok'){
+                        /** Добавляем сообщение бота к списку */
+                        var li_bot = document.createElement("li");
+
+                        li_bot.appendChild(document.createTextNode(data['msg']));
+                        li_bot.setAttribute("class", "bot");
+                        ul.appendChild(li_bot);
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+
+</body>
+
+</html>
+

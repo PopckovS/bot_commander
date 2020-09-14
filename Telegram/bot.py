@@ -7,6 +7,7 @@ from emoji import emojize
 import telebot
 import sys
 import os
+import re
 
 # Добавляем путь к родительской директории
 two_up = os.path.abspath(os.path.join(__file__, "../.."))
@@ -22,6 +23,8 @@ from models.Telegram_Admin import Telegram_Admin
 from models.Telegram_Projects import Telegram_Projects
 from models.Telegram_Messages import Telegram_Messages
 
+# NLP бот для обработки текста
+from nlp_bot.bot import nlp_bot_get_message
 
 # Запускаем сервер на lask
 app = Flask(__name__)
@@ -102,7 +105,7 @@ def save_user(message):
     # Если пользователь не существует, то создаем его
     if result is None:
         # Создаем обьект и вносим данные в его атрибуты
-        user = User(
+        user = Telegram_User(
             telegramID=message.chat.id,
             first_name=message.chat.first_name,
             last_name=message.chat.last_name,
@@ -365,9 +368,17 @@ def get_text_messages(message):
         elif message.text == 'Контакты наших Менеджеров':
             send_contacts_manager(message)
         else:
-            text = 'Я вас не понимаю :( Чем я могу тебе помочь?'
-            bot.send_message(message.from_user.id, text)
-            save_message(message, text, 'bot')
+
+            # TODO Новая система с обработкой текста от бота
+            # Ответ от Бота
+            answer = nlp_bot_get_message(message.text)
+            bot.send_message(message.from_user.id, answer)
+            save_message(message, answer, 'bot')
+
+            # TODO Старая Система обработки текста
+            # text = 'Я вас не понимаю :( Чем я могу тебе помочь?'
+            # bot.send_message(message.from_user.id, text)
+            # save_message(message, text, 'bot')
 
 
 

@@ -17,6 +17,8 @@ sys.path.append(two_up)
 import Facebook.config as config
 from Facebook.config import trace
 
+# NLP бот для обработки текста
+from nlp_bot.bot import nlp_bot_get_message
 
 app = Flask(__name__)
 app.secret_key = 'some_secret'
@@ -53,12 +55,20 @@ def index_action_for_facebook_post_request():
         entry = data['entry'][0]
 
         if entry.get("messaging"):
+
+            # TODO Старая система обработки текста,ростов озвращала переданный текст обратно
+            # messaging_event = entry['messaging'][0]
+            # sender_id = messaging_event['sender']['id']
+            # message_text = messaging_event['message']['text']
+            # send_text_message(sender_id, message_text)
+            # send_gif_message(sender_id, message_text)
+
+            # TODO Новая система обработки текста
             messaging_event = entry['messaging'][0]
             sender_id = messaging_event['sender']['id']
             message_text = messaging_event['message']['text']
-
-            send_text_message(sender_id, message_text)
-            send_gif_message(sender_id, message_text)
+            answer = nlp_bot_get_message(message_text)
+            send_text_message(sender_id, answer)
 
     return "index_action_for_facebook_post_request"
 

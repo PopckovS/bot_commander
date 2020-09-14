@@ -47,7 +47,7 @@ def facebook_process_host_register():
 
 def website_process_register():
     """Запуск сайта"""
-    os.system('python3 Website/app.py')
+    os.system('python3 Website/bot.py')
 
 
 all_process_start()  # Метод запускает дочерние процессы, для запуска ботов

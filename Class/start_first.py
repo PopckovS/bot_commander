@@ -1,34 +1,21 @@
 #! /usr/bin/python3
-from abc import ABC, abstractmethod, abstractproperty
+
+from Class.Fabrica import AbstractCommandRegister
+
 from multiprocessing import Process
 from multiprocessing import Pool
-import config
-import os
+
 from threading import Thread
 
-"""Унаследовать функционал метода родителя - super().<Название метода родителя>"""
+import config
+import os
 
 
-class AbstractCommandRegister(ABC):
-    """Абстрактный класс для регистрации процессов и запуска приложения."""
-
-    @abstractmethod
-    def start(self):
-        pass
-
-    @abstractmethod
-    def process_register(self, script):
-        pass
-
-    @abstractmethod
-    def localtunnel_register(self, domain, port):
-        pass
-
-
-
+# TODO Не исполняется запуск сайта на caltunnel из за этого пока что нельзя установить вэбхук с FaceBook.
 class CommandRegister(AbstractCommandRegister):
-    """Класс регистрации запускаемых процессов, и сайтов
-    которые будут открыты в Интернет."""
+
+    """Класс наследуется AbstractCommandRegister.
+     Реализует регистрацию запускаемых процессов, и сайтов которые будут открыты в Интернет."""
 
     process_prefix = 'python3'
     process_list = []
@@ -38,22 +25,9 @@ class CommandRegister(AbstractCommandRegister):
     def start(self):
         """Запускает все что было зарегестрировано для процессов и для сайтов,
         на исполнения в своем собственном процессе."""
-        print('=================')
-        print('process_list', len(self.process_list))
-        print('tunnels_list', len(self.tunnels_list))
-        print('=================')
 
         self.creaet_process(self.process_list)
         self.creaet_process(self.tunnels_list)
-
-    def rrr(self, domain, port):
-        r = f"lt -h http://serverless.social --subdomain {domain} -p {port}"
-
-        def ss():
-           os.system(r)
-
-        p1 = Process(target=ss)
-        p1.start()
 
     def creaet_process(self, commands):
         """Метод Pool из модуля multiprocessing регистрирует не один как Process.
@@ -93,9 +67,3 @@ class CommandRegister(AbstractCommandRegister):
     def get_register_tunnels(self):
         """Показать все зарегестрированные сайты и их порты."""
         return self.domain
-
-
-
-
-
-
