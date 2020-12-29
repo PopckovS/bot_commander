@@ -2,7 +2,7 @@
 
 import os
 import sys
-from install.config import LIBRARY
+from config import LIBRARY
 
 
 class Install():
@@ -16,3 +16,11 @@ class Install():
         for key, value in self.library.items():
             for elem in value:
                 os.system(elem)
+
+
+""" 
+Вызов этого метода начнет процесс установки всх нужных
+библиотек для работы: python3 install/install.py
+"""
+instalObject = Install()
+instalObject.insall_library()
